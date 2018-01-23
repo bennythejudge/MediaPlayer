@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
 
         mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.f1);
 
-
         Button playButton = (Button) findViewById(R.id.play);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,6 +32,13 @@ public class MainActivity extends AppCompatActivity {
                     mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.f1);
                 }
                 mediaPlayer.start(); // no need to call prepare(); create() does that for you
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    public void onCompletion(MediaPlayer mp) {
+                        Toast.makeText(getApplicationContext(), "I'm done!", Toast.LENGTH_SHORT).show();
+                        mediaPlayer.release();
+                        mediaPlayer = null;
+                    }
+                });
             }
         });
 
